@@ -8,6 +8,7 @@ import logging
 from .http import request_method, JSONRPCRequest
 
 NUTSHELL_API_HOST = "app01.nutshell.com/api/v1/json"
+REV_IGNORE = "REV_IGNORE"
 
 
 # These two lines enable debugging at httplib level (requests->urllib3->http.client)
@@ -75,8 +76,8 @@ class NutshellCRMClient(BaseNutshellCRMClient):
     # CONTACTS (PEOPLE)
 
     @request_method
-    def get_contact(self, contact_id):
-        params = {"contactId": contact_id}
+    def get_contact(self, contact_id, rev=REV_IGNORE):
+        params = {"contactId": contact_id, "rev": rev}
         return JSONRPCRequest(self, "getContact", params)
 
     @request_method
@@ -84,17 +85,14 @@ class NutshellCRMClient(BaseNutshellCRMClient):
         return JSONRPCRequest(self, "newContact", params)
 
     @request_method
-    def edit_contact(self, contact_id, rev="REV_IGNORE", name=None, phone=None, tags=None):
-        contact = {}
-        if name:
-            contact["name"] = name
-        if phone:
-            contact["phone"] = phone
-        if tags:
-            contact["tags"] = tags
-        params = {"contact": contact, "contactId": contact_id, "rev": rev}
-
+    def edit_contact(self, contact_id, contact, rev=REV_IGNORE):
+        params = {'contactId': contact_id, "contact": contact, "rev": rev}
         return JSONRPCRequest(self, "editContact", params)
+
+    @request_method
+    def delete_contact(self, contact_id):
+        params = {"contactId": contact_id, "rev": REV_IGNORE}
+        return JSONRPCRequest(self, "deleteContact", params)
 
     @request_method
     def find_contacts(self, query, order_by='name', order_direction='ASC', limit=50, page=1, stub_responses=True):
@@ -109,8 +107,8 @@ class NutshellCRMClient(BaseNutshellCRMClient):
     # ACCOUNTS (COMPANIES)
 
     @request_method
-    def get_account(self, account_id):
-        params = {"accountId": account_id}
+    def get_account(self, account_id, rev=REV_IGNORE):
+        params = {"accountId": account_id, "rev": rev}
         return JSONRPCRequest(self, "getAccount", params)
 
     @request_method
@@ -118,16 +116,14 @@ class NutshellCRMClient(BaseNutshellCRMClient):
         return JSONRPCRequest(self, "newAccount", params)
 
     @request_method
-    def edit_account(self, account_id, rev="REV_IGNORE", name=None, url=None, tags=None):
-        contact = {}
-        if name:
-            contact["name"] = name
-        if url:
-            contact["url"] = url
-        if tags:
-            contact["tags"] = tags
-        params = {"account": contact, "accountId": account_id, "rev": rev}
+    def edit_account(self, account_id, account, rev=REV_IGNORE):
+        params = {'accountId': account_id, "account": account, "rev": rev}
         return JSONRPCRequest(self, "editAccount", params)
+
+    @request_method
+    def delete_account(self, account_id, rev=REV_IGNORE):
+        params = {"contactId": account_id, "rev": rev}
+        return JSONRPCRequest(self, "deleteAccount", params)
 
     @request_method
     def find_accounts(self, query, order_by='name', order_direction='ASC', limit=50, page=1, stub_responses=True):
@@ -139,8 +135,136 @@ class NutshellCRMClient(BaseNutshellCRMClient):
         params = {'string': string, 'limit': limit}
         return JSONRPCRequest(self, "searchAccounts", params)
 
-    # CUSTOM FIELDS
+    # LEADS
+
+    @request_method
+    def get_lead(self, lead_id, rev=REV_IGNORE):
+        params = {"leadId": lead_id, "rev": rev}
+        return JSONRPCRequest(self, "getLead", params)
+
+    @request_method
+    def new_lead(self, params):
+        return JSONRPCRequest(self, "newLead", params)
+
+    @request_method
+    def edit_lead(self, lead_id, lead, rev=REV_IGNORE):
+        params = {'leadId': lead_id, "lead": lead, "rev": rev}
+        return JSONRPCRequest(self, "editLead", params)
+
+    @request_method
+    def delete_lead(self, lead_id, rev=REV_IGNORE):
+        params = {"leadId": lead_id, "rev": rev}
+        return JSONRPCRequest(self, "deleteLead", params)
+
+    # TASKS
+
+    @request_method
+    def get_task(self, task_id, rev=REV_IGNORE):
+        params = {"taskId": task_id, "rev": rev}
+        return JSONRPCRequest(self, "getTask", params)
+
+    @request_method
+    def new_task(self, params):
+        return JSONRPCRequest(self, "newTask", params)
+
+    @request_method
+    def edit_task(self, task_id, task, rev=REV_IGNORE):
+        params = {'taskId': task_id, "task": task, "rev": rev}
+        return JSONRPCRequest(self, "editTask", params)
+
+    @request_method
+    def delete_task(self, task_id, rev=REV_IGNORE):
+        params = {"taskId": task_id, "rev": rev}
+        return JSONRPCRequest(self, "deleteTask", params)
+
+    # ACTIVITIES
+
+    @request_method
+    def get_activity(self, activity_id, rev=REV_IGNORE):
+        params = {"activityId": activity_id, "rev": rev}
+        return JSONRPCRequest(self, "getActivity", params)
+
+    @request_method
+    def new_activity(self, params):
+        return JSONRPCRequest(self, "newActivity", params)
+
+    @request_method
+    def edit_activity(self, activity_id, activity, rev=REV_IGNORE):
+        params = {'activityId': activity_id, "activity": activity, "rev": rev}
+        return JSONRPCRequest(self, "editActivity", params)
+
+    @request_method
+    def delete_activity(self, activity_id, rev=REV_IGNORE):
+        params = {"activityId": activity_id, "rev": rev}
+        return JSONRPCRequest(self, "deleteActivity", params)
+
+    # PRODUCTS
+
+    @request_method
+    def get_product(self, product_id, rev=REV_IGNORE):
+        params = {"productId": product_id, "rev": rev}
+        return JSONRPCRequest(self, "getProduct", params)
+
+    @request_method
+    def new_product(self, params):
+        return JSONRPCRequest(self, "newProduct", params)
+
+    @request_method
+    def edit_product(self, product_id, product, rev=REV_IGNORE):
+        params = {'productId': product_id, "product": product, "rev": rev}
+        return JSONRPCRequest(self, "editProduct", params)
+
+    @request_method
+    def delete_product(self, product_id, rev=REV_IGNORE):
+        params = {"productId": product_id, "rev": rev}
+        return JSONRPCRequest(self, "deleteProduct", params)
+
+    # NOTES
+
+    @request_method
+    def get_note(self, note_id, rev=REV_IGNORE):
+        params = {"noteId": note_id, "rev": rev}
+        return JSONRPCRequest(self, "getNote", params)
+
+    @request_method
+    def new_note(self, params):
+        return JSONRPCRequest(self, "newNote", params)
+
+    @request_method
+    def edit_note(self, note_id, note, rev=REV_IGNORE):
+        params = {'noteId': note_id, "note": note, "rev": rev}
+        return JSONRPCRequest(self, "editNote", params)
+
+    @request_method
+    def delete_note(self, note_id, rev=REV_IGNORE):
+        params = {"noteId": note_id, "rev": rev}
+        return JSONRPCRequest(self, "deleteNote", params)
+
+    # Field, Tags, Backups
 
     @request_method
     def find_custom_fields(self):
         return JSONRPCRequest(self, "findCustomFields")
+
+    @request_method
+    def find_tags(self):
+        return JSONRPCRequest(self, "findTags")
+
+    @request_method
+    def find_backups(self):
+        return JSONRPCRequest(self, "findBackups")
+
+    @request_method
+    def new_backup(self):
+        return JSONRPCRequest(self, "newBackup")
+
+    @request_method
+    def instance_data(self):
+        return JSONRPCRequest(self, "instanceData")
+
+    # TESTING
+
+    @request_method
+    def add(self, num1, num2):
+        params = {"num1": num1, "num2": num2}
+        return JSONRPCRequest(self, "add", params)

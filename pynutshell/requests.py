@@ -4,7 +4,6 @@ from __future__ import (print_function, unicode_literals, absolute_import,
                         division)
 
 import requests
-import sys
 
 from .http import process_response
 
