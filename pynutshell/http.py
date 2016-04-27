@@ -53,10 +53,14 @@ def process_response(status, body):
         raise NutshellCRMBadRequest(body)
     elif status == 401:
         raise NutshellCRMBadAuth(body)
+    elif status == 404:
+        raise NutshellCRMNotFound(body)
     elif status == 403:
         raise NutshellCRMForbidden(body)
     elif status == 406:
         raise NutshellCRMLimitExceeded(body)
+    elif status == 500:
+        raise NutshellCRMServerError(body)
     else:
         raise NutshellCRMBadStatus("%s: %s" % (status, body))
 

@@ -9,6 +9,10 @@ class NutshellCRMBadRequest(NutshellCRMError):
     pass
 
 
+class NutshellCRMNotFound(NutshellCRMError):
+    pass
+
+
 class NutshellCRMBadAuth(NutshellCRMError):
     pass
 
@@ -22,4 +26,8 @@ class NutshellCRMLimitExceeded(NutshellCRMError):
 
 
 class NutshellCRMBadStatus(NutshellCRMError):
+    pass
+
+
+class NutshellCRMServerError(NutshellCRMError):
     pass
