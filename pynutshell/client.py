@@ -6,8 +6,9 @@ import logging
 
 # Documentation: https://github.com/agilecrm/rest-api
 from .http import request_method, JSONRPCRequest
+from .requests import RequestsBackend
 
-NUTSHELL_API_HOST = "app01.nutshell.com/api/v1/json"
+NUTSHELL_API_HOST = "app01.nutshell.com"
 REV_IGNORE = "REV_IGNORE"
 
 
@@ -31,21 +32,22 @@ requests_log.propagate = True
 
 class BaseNutshellCRMClient(object):
 
-    def __init__(self, api_email, api_key, backend=None, timeout=5):
+    def __init__(self, api_email, api_key, backend=None, timeout=5,
+                 host=NUTSHELL_API_HOST, scheme='https'):
         if backend is None:
-            from .requests import RequestsBackend
             backend = RequestsBackend
 
         self._api_email = api_email
         self._api_key = api_key
         self._timeout = timeout
-        self._host = NUTSHELL_API_HOST
+        self._host = "{}{}".format(host, "/api/v1/json")
+        self._scheme = scheme
 
         self.http = backend(self, auth=(self.api_email, self.api_key))
 
     @property
     def scheme(self):
-        return 'https'
+        return self._scheme
 
     @property
     def host(self):
@@ -62,6 +64,23 @@ class BaseNutshellCRMClient(object):
     @property
     def timeout(self):
         return self._timeout
+
+    @classmethod
+    def get_endpoint(cls, username):
+        """
+        https://www.nutshell.com/api/endpoint-discovery.html
+        """
+        params = {'username': username}
+
+        class AnonymousClient(object):
+            host = "api.nutshell.com/v1/json"
+            scheme = "http"
+            timeout = 5
+
+            def __init__(self):
+                self.http = RequestsBackend(self)
+        client = AnonymousClient()
+        return client.http.send_request(JSONRPCRequest(client, "getApiForUsername", params))
 
 
 class NutshellCRMClient(BaseNutshellCRMClient):
