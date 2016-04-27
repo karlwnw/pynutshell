@@ -96,7 +96,14 @@ class NutshellCRMClient(BaseNutshellCRMClient):
 
     @request_method
     def find_contacts(self, query, order_by='name', order_direction='ASC', limit=50, page=1, stub_responses=True):
-        params = {}
+        params = {
+            'query': query,
+            'orderBy': order_by,
+            'orderDirection': order_direction,
+            'limit': limit,
+            'page': page,
+            'stubResponses': stub_responses
+        }
         return JSONRPCRequest(self, "findContacts", params)
 
     @request_method
@@ -127,7 +134,14 @@ class NutshellCRMClient(BaseNutshellCRMClient):
 
     @request_method
     def find_accounts(self, query, order_by='name', order_direction='ASC', limit=50, page=1, stub_responses=True):
-        params = {}
+        params = {
+            'query': query,
+            'orderBy': order_by,
+            'orderDirection': order_direction,
+            'limit': limit,
+            'page': page,
+            'stubResponses': stub_responses
+        }
         return JSONRPCRequest(self, "findAccounts", params)
 
     @request_method
@@ -156,6 +170,18 @@ class NutshellCRMClient(BaseNutshellCRMClient):
         params = {"leadId": lead_id, "rev": rev}
         return JSONRPCRequest(self, "deleteLead", params)
 
+    @request_method
+    def find_leads(self, query, order_by='id', order_direction='ASC', limit=50, page=1, stub_responses=True):
+        params = {
+            'query': query,
+            'orderBy': order_by,
+            'orderDirection': order_direction,
+            'limit': limit,
+            'page': page,
+            'stubResponses': stub_responses
+        }
+        return JSONRPCRequest(self, "findLeads", params)
+
     # TASKS
 
     @request_method
@@ -176,6 +202,18 @@ class NutshellCRMClient(BaseNutshellCRMClient):
     def delete_task(self, task_id, rev=REV_IGNORE):
         params = {"taskId": task_id, "rev": rev}
         return JSONRPCRequest(self, "deleteTask", params)
+
+    @request_method
+    def find_tasks(self, query, order_by='due_time', order_direction='ASC', limit=50, page=1, stub_responses=True):
+        params = {
+            'query': query,
+            'orderBy': order_by,
+            'orderDirection': order_direction,
+            'limit': limit,
+            'page': page,
+            'stubResponses': stub_responses
+        }
+        return JSONRPCRequest(self, "findTasks", params)
 
     # ACTIVITIES
 
@@ -198,6 +236,18 @@ class NutshellCRMClient(BaseNutshellCRMClient):
         params = {"activityId": activity_id, "rev": rev}
         return JSONRPCRequest(self, "deleteActivity", params)
 
+    @request_method
+    def find_activities(self, query, order_by='name', order_direction='ASC', limit=50, page=1, stub_responses=True):
+        params = {
+            'query': query,
+            'orderBy': order_by,
+            'orderDirection': order_direction,
+            'limit': limit,
+            'page': page,
+            'stubResponses': stub_responses
+        }
+        return JSONRPCRequest(self, "findActivities", params)
+
     # PRODUCTS
 
     @request_method
@@ -218,6 +268,18 @@ class NutshellCRMClient(BaseNutshellCRMClient):
     def delete_product(self, product_id, rev=REV_IGNORE):
         params = {"productId": product_id, "rev": rev}
         return JSONRPCRequest(self, "deleteProduct", params)
+
+    @request_method
+    def find_products(self, query, order_by='name', order_direction='ASC', limit=50, page=1, stub_responses=True):
+        params = {
+            'query': query,
+            'orderBy': order_by,
+            'orderDirection': order_direction,
+            'limit': limit,
+            'page': page,
+            'stubResponses': stub_responses
+        }
+        return JSONRPCRequest(self, "findProducts", params)
 
     # NOTES
 
