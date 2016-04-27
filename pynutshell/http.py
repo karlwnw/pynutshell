@@ -120,4 +120,7 @@ class JSONRPCRequest(Request):
         """
         Construct the JSON-RPC params
         """
-        return {"id": "apeye", "method": method, 'params': params}
+        jsonrpc_params = {"id": "apeye", "method": method}
+        if params is not None:
+            jsonrpc_params.update({'params': params})
+        return jsonrpc_params
