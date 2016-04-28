@@ -25,3 +25,9 @@ data = builder.params
 client = NutshellCRMClient(email, api_key)
 response = client.new_account(data)
 ```
+
+## Run tests
+
+```
+python setup.py test
+```
