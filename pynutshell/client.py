@@ -321,7 +321,7 @@ class NutshellCRMClient(BaseNutshellCRMClient):
         params = {"noteId": note_id, "rev": rev}
         return JSONRPCRequest(self, "deleteNote", params)
 
-    # Field, Tags, Backups
+    # Field, Tags, Territories, Backups
 
     @request_method
     def find_custom_fields(self):
@@ -342,6 +342,35 @@ class NutshellCRMClient(BaseNutshellCRMClient):
     @request_method
     def instance_data(self):
         return JSONRPCRequest(self, "instanceData")
+
+    @request_method
+    def find_territories(self, order_by='name', order_direction='ASC', limit=50, page=1):
+        params = {
+            'orderBy': order_by,
+            'orderDirection': order_direction,
+            'limit': limit,
+            'page': page
+        }
+        return JSONRPCRequest(self, "findTerritories", params)
+
+    @request_method
+    def find_account_types(self, order_by='name', order_direction='ASC', limit=50, page=1):
+        params = {
+            'orderBy': order_by,
+            'orderDirection': order_direction,
+            'limit': limit,
+            'page': page
+        }
+        return JSONRPCRequest(self, "findAccountTypes", params)
+
+    @request_method
+    def get_analytics_report(self, report_type, period, filter=None, options=None):
+        params = {'reportType': report_type, 'period': period}
+        if filter is not None:
+            params.update({'filter': filter})
+        if options is not None:
+            params.update({'options': options})
+        return JSONRPCRequest(self, "getAnalyticsReport", params)
 
     # TESTING
 
