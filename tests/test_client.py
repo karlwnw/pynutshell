@@ -41,22 +41,20 @@ class TestClient(unittest.TestCase):
 
     def test_new_contact_request(self):
             params = {
-                'contact': {
-                    "name": "Andy Fowler",
-                    "owner": {
-                        "entityType": "Users",
-                        "id": 1
-                    },
-                    "description": "Beagle owner",
-                    "phone": ["717-555-0480", "+216 707-555-2903", "877-555-5555"],
-                    "email": ["andy@gmail.com", "fowler@charter.net"]
-                }
+                "name": "Andy Fowler",
+                "owner": {
+                    "entityType": "Users",
+                    "id": 1
+                },
+                "description": "Beagle owner",
+                "phone": ["717-555-0480", "+216 707-555-2903", "877-555-5555"],
+                "email": ["andy@gmail.com", "fowler@charter.net"]
             }
 
             expected_params = {
                 'id': 'apeye',
                 'method': 'newContact',
-                'params': params
+                'params': {'contact': params}
             }
 
             json_dumped = json.dumps(expected_params)

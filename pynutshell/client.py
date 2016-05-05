@@ -101,7 +101,7 @@ class NutshellCRMClient(BaseNutshellCRMClient):
 
     @request_method
     def new_contact(self, params):
-        return JSONRPCRequest(self, "newContact", params)
+        return JSONRPCRequest(self, "newContact", {"contact": params})
 
     @request_method
     def edit_contact(self, contact_id, contact, rev=REV_IGNORE):
@@ -139,7 +139,7 @@ class NutshellCRMClient(BaseNutshellCRMClient):
 
     @request_method
     def new_account(self, params):
-        return JSONRPCRequest(self, "newAccount", params)
+        return JSONRPCRequest(self, "newAccount", {"account": params})
 
     @request_method
     def edit_account(self, account_id, account, rev=REV_IGNORE):
@@ -177,7 +177,7 @@ class NutshellCRMClient(BaseNutshellCRMClient):
 
     @request_method
     def new_lead(self, params):
-        return JSONRPCRequest(self, "newLead", params)
+        return JSONRPCRequest(self, "newLead", {"lead": params})
 
     @request_method
     def edit_lead(self, lead_id, lead, rev=REV_IGNORE):
@@ -210,7 +210,7 @@ class NutshellCRMClient(BaseNutshellCRMClient):
 
     @request_method
     def new_task(self, params):
-        return JSONRPCRequest(self, "newTask", params)
+        return JSONRPCRequest(self, "newTask", {"task": params})
 
     @request_method
     def edit_task(self, task_id, task, rev=REV_IGNORE):
@@ -243,7 +243,7 @@ class NutshellCRMClient(BaseNutshellCRMClient):
 
     @request_method
     def new_activity(self, params):
-        return JSONRPCRequest(self, "newActivity", params)
+        return JSONRPCRequest(self, "newActivity", {"activity": params})
 
     @request_method
     def edit_activity(self, activity_id, activity, rev=REV_IGNORE):
@@ -276,7 +276,7 @@ class NutshellCRMClient(BaseNutshellCRMClient):
 
     @request_method
     def new_product(self, params):
-        return JSONRPCRequest(self, "newProduct", params)
+        return JSONRPCRequest(self, "newProduct", {"product": params})
 
     @request_method
     def edit_product(self, product_id, product, rev=REV_IGNORE):
@@ -309,7 +309,7 @@ class NutshellCRMClient(BaseNutshellCRMClient):
 
     @request_method
     def new_note(self, params):
-        return JSONRPCRequest(self, "newNote", params)
+        return JSONRPCRequest(self, "newNote", {"note": params})
 
     @request_method
     def edit_note(self, note_id, note, rev=REV_IGNORE):

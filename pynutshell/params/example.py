@@ -5,10 +5,15 @@ class AccountParamsBuilder(BaseParamsBuilder):
 
     def __init__(self, company):
         super(AccountParamsBuilder, self).__init__()
-        self.company = company
+        self.local_company = company
+        self.nutshell_company = {}
+
+    @property
+    def params(self):
+        return self.nutshell_company
 
     def build_creation_params(self):
-        self.params = {
+        self.nutshell_company = {
             "account": {
                 "name": self.company.name,
                 "url": self.company.url,
@@ -23,10 +28,15 @@ class ContactParamsBuilder(BaseParamsBuilder):
 
     def __init__(self, user):
         super(ContactParamsBuilder, self).__init__()
-        self.user = user
+        self.local_user = user
+        self.nutshell_contact = {}
+
+    @property
+    def params(self):
+        return self.nutshell_contact
 
     def build_creation_params(self):
-        self.params = {
+        self.nutshell_contact = {
             "contact": {
                 "name": self.user.full_name,
                 "phone": [self.user.phone],
