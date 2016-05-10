@@ -14,14 +14,13 @@ class AccountParamsBuilder(BaseParamsBuilder):
 
     def build_creation_params(self):
         self.nutshell_company = {
-            "account": {
-                "name": self.company.name,
-                "url": self.company.url,
-                "customFields": {
-                    "Category": self.company.category
-                }
-            }
+            "name": self.company.name,
+            "url": self.company.url,
         }
+
+        self._build_custom_fields({
+            "Category": self.company.category
+        })
 
 
 class ContactParamsBuilder(BaseParamsBuilder):
@@ -37,9 +36,7 @@ class ContactParamsBuilder(BaseParamsBuilder):
 
     def build_creation_params(self):
         self.nutshell_contact = {
-            "contact": {
-                "name": self.user.full_name,
-                "phone": [self.user.phone],
-                "email": [self.user.email],
-            }
+            "name": self.user.full_name,
+            "phone": [self.user.phone],
+            "email": [self.user.email],
         }
