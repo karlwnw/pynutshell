@@ -190,6 +190,16 @@ class NutshellCRMClient(BaseNutshellCRMClient):
         return JSONRPCRequest(self, "deleteLead", params)
 
     @request_method
+    def find_lead_outcomes(self, order_by='description', order_direction='ASC', limit=50, page=1):
+        params = {
+            'orderBy': order_by,
+            'orderDirection': order_direction,
+            'limit': limit,
+            'page': page,
+        }
+        return JSONRPCRequest(self, "findLead_Outcomes", params)
+
+    @request_method
     def find_leads(self, query, order_by='id', order_direction='ASC', limit=50, page=1, stub_responses=True):
         params = {
             'query': query,
