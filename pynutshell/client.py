@@ -331,6 +331,31 @@ class NutshellCRMClient(BaseNutshellCRMClient):
         params = {"noteId": note_id, "rev": rev}
         return JSONRPCRequest(self, "deleteNote", params)
 
+    # sources
+
+    @request_method
+    def new_source(self, name):
+        """
+        Given a source name, fetches an existing source or creates a new one if it does not exist.
+        """
+        params = {"name": name}
+        return JSONRPCRequest(self, "newSource", params)
+
+    @request_method
+    def find_sources(self, order_by='name', order_direction='ASC', limit=50, page=1):
+        params = {
+            'orderBy': order_by,
+            'orderDirection': order_direction,
+            'limit': limit,
+            'page': page,
+        }
+        return JSONRPCRequest(self, "findSources", params)
+
+    @request_method
+    def search_contacts(self, string, limit=10):
+        params = {'string': string, 'limit': limit}
+        return JSONRPCRequest(self, "searchSources", params)
+
     # Field, Tags, Territories, Backups
 
     @request_method
