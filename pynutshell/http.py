@@ -16,6 +16,7 @@ class RequestMethod(object):
     def __init__(self, client, f):
         self.client = client
         self.f = f
+        self.__name__ = f.__name__
 
     def __call__(self, *args, **kwargs):
         return self.client.http.send_request(self.make_request(*args, **kwargs))
